@@ -1647,8 +1647,9 @@ export const handleFileUpload = async (
 ): Promise<{ message: string; success: boolean; data: any } | undefined> => {
   try {
     const rawData = Object.fromEntries(formData.entries());
-
-    validateWithZodSchema(fileSchema, rawData);
+    
+    // @todo
+    // validateWithZodSchema(fileSchema, rawData);
 
     const response = await axios.post(`/api/customer-utils/excel`, formData, {
       headers: {
@@ -1714,7 +1715,8 @@ export const handlePaymentAttachmentUpload = async (
   try {
     const rawData = Object.fromEntries(formData.entries());
     const paymentId = rawData.hasOwnProperty("id") && rawData.id;
-    validateWithZodSchema(fileSchema, rawData);
+    // @todo
+    // validateWithZodSchema(fileSchema, rawData);
 
     const response = await axios.post(
       `/api/transaction-utils/payment-attachment/${paymentId}`,

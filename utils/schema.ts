@@ -91,7 +91,7 @@ function validateFile() {
 }
 //-----------------------image shema--------------------------
 export const fileSchema = z.object({
-  file: validateFile(),
+  
 });
 
 //-------------------customer schema----------------------------
