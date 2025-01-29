@@ -17,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ModalContainer from "@/components/common/ModalContainer";
 import SupplierProductForm from "./SupplierProductForm";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -47,9 +46,6 @@ function SuppliersProductsTable({ data }: { data }) {
 
   return (
     <div className="border border-gray-200 rounded-xl ">
-      <div className="m-16 flex justify-end items-center gap-4">
-        <NewSupplierProductForm />
-      </div>
       {supplierProducts.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>
@@ -57,19 +53,15 @@ function SuppliersProductsTable({ data }: { data }) {
           </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[10rem] text-right">دسته بندی</TableHead>
-              <TableHead className="w-[8rem] text-right">نام محصول</TableHead>
-              <TableHead className="w-[8rem] text-right">تامین کننده</TableHead>
-              <TableHead className="w-[8rem] text-right">واحد</TableHead>
-              <TableHead className="w-[8rem] text-right">قیمت</TableHead>
-              <TableHead className="w-[8rem] text-right">
-                قیمت با تخفیف
-              </TableHead>
-              <TableHead className="w-[8rem] text-right">
-                پورسانت فروشنده
-              </TableHead>
-              <TableHead className="w-[8rem] text-right">کیفیت محصول</TableHead>
-              <TableHead className="w-[15rem] text-right">عملیات</TableHead>
+              <TableHead className="text-center">دسته بندی</TableHead>
+              <TableHead className="text-center">نام محصول</TableHead>
+              <TableHead className="text-center">تامین کننده</TableHead>
+              <TableHead className="text-center">واحد</TableHead>
+              <TableHead className="text-center">قیمت</TableHead>
+              <TableHead className="text-center">قیمت با تخفیف</TableHead>
+              <TableHead className="text-center">پورسانت فروشنده</TableHead>
+              <TableHead className="text-center">کیفیت محصول</TableHead>
+              <TableHead className="text-center">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -89,29 +81,17 @@ function SuppliersProductsTable({ data }: { data }) {
               } = supplierProduct;
               return (
                 <TableRow key={supplierProductId}>
-                  <TableCell className="w-[10rem] text-right">
-                    {categoryTitle}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {productTitle}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {companyName}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">{unit}</TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {selling_price}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">
+                  <TableCell className="text-center">{categoryTitle}</TableCell>
+                  <TableCell className="text-center">{productTitle}</TableCell>
+                  <TableCell className="text-center">{companyName}</TableCell>
+                  <TableCell className="text-center">{unit}</TableCell>
+                  <TableCell className="text-center">{selling_price}</TableCell>
+                  <TableCell className="text-center">
                     {discount_price}
                   </TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {commission}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {quality}
-                  </TableCell>
-                  <TableCell className="w-[15rem] text-right flex gap-2">
+                  <TableCell className="text-center">{commission}</TableCell>
+                  <TableCell className="text-center">{quality}</TableCell>
+                  <TableCell className="text-center justify-center flex gap-2">
                     <Dialog open={open} onOpenChange={setOpen}>
                       <DialogTrigger asChild>
                         <Button
@@ -166,20 +146,6 @@ function SuppliersProductsTable({ data }: { data }) {
         </Table>
       )}
     </div>
-  );
-}
-
-function NewSupplierProductForm() {
-  const [open, setOpen] = useState(false);
-  return (
-    <ModalContainer
-      dialogTitle="محصول جدید"
-      buttonText="محصول جدید"
-      open={open}
-      setOpen={setOpen}
-    >
-      <SupplierProductForm setOpen={setOpen} />
-    </ModalContainer>
   );
 }
 

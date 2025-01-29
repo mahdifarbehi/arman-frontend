@@ -26,9 +26,9 @@ function Search() {
     if (!searchParams.get("search")) setSearch("");
   }, [searchParams]);
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label>جستجو</Label>
-      <div className="flex gap-2  items-center">
+    <div className="flex items-center flex-col gap-2">
+      {/* <Label>جستجو</Label> */}
+      <div className="flex gap-2 items-center">
         <Input
           type="search"
           className="max-w-[200px]"
@@ -38,9 +38,9 @@ function Search() {
             setSearch(e.target.value);
           }}
         />
-      <Button onClick={handleSearch} className="w-32">
-        جستجو
-      </Button>
+        <Button onClick={handleSearch} className="w-32">
+          جستجو
+        </Button>
       </div>
     </div>
   );

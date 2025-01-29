@@ -23,13 +23,11 @@ function CustomersFilters({ search }: { search?: string }) {
     (state: RootState) => state.store
   );
 
-  const [origin, setOrigin] = useState(null);
-  const [category, setCategory] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
-  let filteredLink = "";
-
-  const searchTerm = search ? `search=${search}` : "";
+  const [origin, setOrigin] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
   const router = useRouter();
+
   useEffect(() => {
     if (customerCategories.length === 0) {
       dispatch(getCustomerCategories());
@@ -37,29 +35,31 @@ function CustomersFilters({ search }: { search?: string }) {
     if (origins.length === 0) {
       dispatch(fetchOrigins());
     }
-  }, [dispatch, customerCategories, origins]);
+  }, [dispatch, customerCategories.length, origins.length]);
 
   const handleFilters = () => {
-    filteredLink = `/customers?${new URLSearchParams({
-      ...(searchTerm ? { search } : {}),
+    const link = `/customers?${new URLSearchParams({
+      ...(search ? { search } : {}),
       ...(origin ? { originId: origin } : {}),
       ...(category ? { categoryId: category } : {}),
       ...(status ? { status } : {}),
     }).toString()}`;
-    router.push(filteredLink);
+    router.push(link);
   };
+
   const handleResetFilters = () => {
-    setCategory(null);
-    setStatus(null);
-    setOrigin(null);
-    filteredLink = `/customers?${searchTerm}`;
-    router.push(filteredLink);
+    setCategory("");
+    setStatus("");
+    setOrigin("");
+    const link = `/customers?${search ? `search=${search}` : ""}`;
+    router.push(link);
   };
 
   return (
-    <div className="grid md:grid-cols-5 gap-4 mb-8">
+    <div className="grid md:grid-cols-5 gap-4">
+      {/* دسته بندی */}
       <div className="mb-2">
-        <Label>دسته بندی</Label>
+        {/* <Label>دسته بندی</Label> */}
         <Select
           dir="rtl"
           name="category_id"
@@ -67,7 +67,7 @@ function CustomersFilters({ search }: { search?: string }) {
           onValueChange={(value) => setCategory(value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="دسته  موردنظر را انتخاب کنید">
+            <SelectValue placeholder="دسته موردنظر را انتخاب کنید">
               {customerCategories.find((c) => c.id.toString() === category)
                 ?.title || "دسته موردنظر را انتخاب کنید"}
             </SelectValue>
@@ -83,11 +83,13 @@ function CustomersFilters({ search }: { search?: string }) {
           </SelectContent>
         </Select>
       </div>
+
+      {/* مبدا مشتری */}
       <div className="mb-2">
-        <Label>مبدا مشتری </Label>
+        {/* <Label>مبدا مشتری</Label> */}
         <Select
           dir="rtl"
-          name="category_id"
+          name="origin_id"
           value={origin}
           onValueChange={(value) => setOrigin(value)}
         >
@@ -108,15 +110,18 @@ function CustomersFilters({ search }: { search?: string }) {
           </SelectContent>
         </Select>
       </div>
+
+      {/* وضعیت */}
       <div className="mb-2">
-        <Label>وضعیت</Label>
+        {/* <Label>وضعیت</Label> */}
         <Select
+          dir="rtl"
           name="status"
           value={status}
           onValueChange={(value) => setStatus(value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select Status" />
+            <SelectValue placeholder="وضعیت را انتخاب کنید" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -133,7 +138,9 @@ function CustomersFilters({ search }: { search?: string }) {
           </SelectContent>
         </Select>
       </div>
-      <div className="mt-6 gap-4 flex">
+
+      {/* دکمه‌ها */}
+      <div className="gap-4 flex">
         <Button className="w-32" onClick={handleFilters}>
           فیلتر
         </Button>

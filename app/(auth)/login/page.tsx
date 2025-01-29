@@ -26,7 +26,7 @@ function LoginPage() {
       localStorage.setItem("token", token);
       toast({ description: state.message });
       router.push("/");
-    } else if(!state?.success && state?.message)
+    } else if (!state?.success && state?.message)
       toast({
         description: state?.message || " نام کاربری یا رمز عبور درست نمی باشد",
       });
@@ -50,7 +50,7 @@ function LoginPage() {
               />
             </div>
             <div className="mb-2">
-              <Label>رمز عبور</Label>{" "}
+              <Label>رمز عبور</Label>
               <Input
                 type="password"
                 name="password"

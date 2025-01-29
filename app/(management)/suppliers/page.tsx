@@ -3,7 +3,6 @@ import SuppliersList from "./components/SuppliersList";
 import { TableSkeleton } from "@/components/common/TableSkeleton";
 export const dynamic = "force-dynamic";
 
-
 async function SuppliersPage(props: {
   searchParams: Promise<{
     search?: string;
@@ -12,11 +11,11 @@ async function SuppliersPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const searchTerm = searchParams.search || "";
-    const categoryId = searchParams.categoryId || "";
+  const categoryId = searchParams.categoryId || "";
   return (
     <section>
       <Suspense fallback={<TableSkeleton />}>
-        <SuppliersList search={searchTerm} categoryId={categoryId}/>
+        <SuppliersList search={searchTerm} categoryId={categoryId} />
       </Suspense>
     </section>
   );

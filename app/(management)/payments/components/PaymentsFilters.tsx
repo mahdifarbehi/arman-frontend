@@ -78,6 +78,7 @@ function PaymentsFilters({ search }: { search?: string }) {
       <div className="mb-2">
         <Label>وضعیت</Label>
         <Select
+          dir="rtl"
           name="status"
           value={status}
           onValueChange={(value) => setStatus(value)}
@@ -93,7 +94,7 @@ function PaymentsFilters({ search }: { search?: string }) {
                     ? "جدید"
                     : status === PaymentStatus.APPROVED
                     ? "تایید شده"
-                    :status=== PaymentStatus.REJECTED
+                    : status === PaymentStatus.REJECTED
                     ? "رد شده"
                     : "در انتظار تایید"}
                 </SelectItem>

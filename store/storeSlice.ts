@@ -27,9 +27,9 @@ interface StoreState {
   failures: any[];
   isLoading: boolean;
   customer: any | null;
-  customerCategories:any[];
+  customerCategories: any[];
   error: string | null;
-  isCollapsed:boolean;
+  isCollapsed: boolean;
 }
 
 // Initial state
@@ -42,13 +42,13 @@ const initialState: StoreState = {
   taskTypes: [],
   userCategories: [],
   productSupplierList: [],
-  customerCategories:[],
+  customerCategories: [],
   leaders: [],
   failures: [],
   isLoading: false,
   customer: null,
   error: null,
-  isCollapsed:false,
+  isCollapsed: false,
 };
 
 // Async thunks for fetching data
@@ -452,7 +452,7 @@ export const {
   setProductSupplierList,
   setCustomerCategories,
   setSidebarState,
-  toggleSidebar
+  toggleSidebar,
 } = storeSlice.actions;
 
 export default storeSlice.reducer;

@@ -43,18 +43,16 @@ function PaymentsTable({ data }: { data }) {
         <TableCaption>مجموع پرداخت ها : {payments.length}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[10rem] text-right">عنوان معامله</TableHead>
-            <TableHead className="w-[8rem] text-right">دسته بندی</TableHead>
-            <TableHead className="w-[8rem] text-right"> مشتری</TableHead>
-            <TableHead className="w-[8rem] text-right">شماره تماس</TableHead>
-            <TableHead className="w-[8rem] text-right">وضعیت </TableHead>
-            <TableHead className="w-[8rem] text-right">
-              تاریخ ثبت وضعیت
-            </TableHead>
-            <TableHead className="w-[8rem] text-right"> فروشنده </TableHead>
-            <TableHead className="w-[8rem] text-right">نوع فروش</TableHead>
-            <TableHead className="w-[8rem] text-right">مبلغ</TableHead>
-            <TableHead className="w-[15rem] text-right">عملیات</TableHead>
+            <TableHead className="text-center">عنوان معامله</TableHead>
+            <TableHead className="text-center">دسته بندی</TableHead>
+            <TableHead className="text-center"> مشتری</TableHead>
+            <TableHead className="text-center">شماره تماس</TableHead>
+            <TableHead className="text-center">وضعیت </TableHead>
+            <TableHead className="text-center">تاریخ ثبت وضعیت</TableHead>
+            <TableHead className="text-center"> فروشنده </TableHead>
+            <TableHead className="text-center">نوع فروش</TableHead>
+            <TableHead className="text-center">مبلغ</TableHead>
+            <TableHead className="text-center">عملیات</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -74,17 +72,13 @@ function PaymentsTable({ data }: { data }) {
             } = payment;
             return (
               <TableRow key={paymentId}>
-                <TableCell className="w-[10rem] text-right">{title}</TableCell>
-                <TableCell className="w-[8rem] text-right">
-                  {categoryTitle}
-                </TableCell>
-                <TableCell className="w-[8rem] text-right">
-                  {customerName}
-                </TableCell>
-                <TableCell className="w-[8rem] text-right">
+                <TableCell className="w-[10rem] text-center">{title}</TableCell>
+                <TableCell className="text-center">{categoryTitle}</TableCell>
+                <TableCell className="text-center">{customerName}</TableCell>
+                <TableCell className="text-center">
                   {phones[0]?.phone}
                 </TableCell>
-                <TableCell className="w-[8rem] text-right">
+                <TableCell className="text-center">
                   {status === PaymentStatus.NEW
                     ? "جدید"
                     : status === PaymentStatus.APPROVED
@@ -93,17 +87,15 @@ function PaymentsTable({ data }: { data }) {
                     ? "رد شده"
                     : "در انتظار تایید"}
                 </TableCell>
-                <TableCell className="w-[8rem] text-right">
+                <TableCell className="text-center">
                   {isoToPersian(status_change_date).toString()}
                 </TableCell>
-                <TableCell className="w-[8rem] text-right">
-                  {sales_agent}
-                </TableCell>
-                <TableCell className="w-[8rem] text-right">
+                <TableCell className="text-center">{sales_agent}</TableCell>
+                <TableCell className="text-center">
                   {payment_type === PaymentType.INSTALLMENT ? "قسطی" : "نقدی"}
                 </TableCell>
-                <TableCell className="w-[8rem] text-right">{amount}</TableCell>
-                <TableCell className="w-[15rem] text-right flex gap-2">
+                <TableCell className="text-center">{amount}</TableCell>
+                <TableCell className="text-center justify-center flex gap-2">
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                       <Button

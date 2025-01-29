@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
@@ -39,6 +39,7 @@ function UsersFilters({ search }: { search?: string }) {
       <div className="mb-2">
         <Label>نقش کاربر</Label>
         <Select
+          dir="rtl"
           name="role"
           value={role}
           onValueChange={(value) => setRole(value)}

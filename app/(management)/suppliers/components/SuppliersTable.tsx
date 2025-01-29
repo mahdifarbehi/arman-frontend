@@ -53,20 +53,18 @@ function SuppliersTable({ data }: { data }) {
       </div> */}
       {suppliers.length !== 0 && (
         <Table dir="rtl">
-          <TableCaption className="mb-4">مجموع تامین کنندگان : {suppliers.length}</TableCaption>
+          <TableCaption className="mb-4">
+            مجموع تامین کنندگان : {suppliers.length}
+          </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[10rem] text-center">دسته بندی</TableHead>
-              <TableHead className="w-[8rem] text-center">نام شرکت </TableHead>
-              <TableHead className="w-[8rem] text-center">
-                نام تامین کننده
-              </TableHead>
-              <TableHead className="w-[8rem] text-center">شماره تماس </TableHead>
-              <TableHead className="w-[8rem] text-center">
-                کیفیت تامین کننده
-              </TableHead>
-              <TableHead className="w-[8rem] text-center"> توضیحات </TableHead>
-              <TableHead className="w-[15rem] text-center">عملیات</TableHead>
+              <TableHead className="text-center">دسته بندی</TableHead>
+              <TableHead className="text-center">نام شرکت </TableHead>
+              <TableHead className="text-center">نام تامین کننده</TableHead>
+              <TableHead className="text-center">شماره تماس </TableHead>
+              <TableHead className="text-center">کیفیت تامین کننده</TableHead>
+              <TableHead className="text-center"> توضیحات </TableHead>
+              <TableHead className="text-center">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -82,24 +80,16 @@ function SuppliersTable({ data }: { data }) {
               } = supplier;
               return (
                 <TableRow key={supplierId}>
-                  <TableCell className="w-[10rem] text-center">
+                  <TableCell className="wtext-center">
                     {category.title}
                   </TableCell>
-                  <TableCell className="w-[8rem] text-center">
-                    {company_name}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-center">
-                    {contact_name}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-center">
+                  <TableCell className="text-center">{company_name}</TableCell>
+                  <TableCell className="text-center">{contact_name}</TableCell>
+                  <TableCell className="text-center">
                     {phones[0]?.phone}
                   </TableCell>
-                  <TableCell className="w-[8rem] text-center">
-                    {quality}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-center">
-                    {description}
-                  </TableCell>
+                  <TableCell className="text-center">{quality}</TableCell>
+                  <TableCell className="text-center">{description}</TableCell>
                   <TableCell className=" items-center justify-center  text-center flex gap-2">
                     <Dialog open={open} onOpenChange={setOpen}>
                       <DialogTrigger asChild>

@@ -22,11 +22,14 @@ async function PaymentsList({
   if (!success) return <CustomErrorBoundary message={message} />;
 
   return (
-    <div className="mt-10">
-      <h1 className="mb-8 text-4xl font-bold">پرداخت ها</h1>
-      <div className="flex flex-col justify-center items-start ">
-        <Search />
+    <div>
+      <h1 className="mb-3 mt-4 text-4xl font-extrabold text-gray-700 dark:text-white">
+        پرداخت ها
+      </h1>
+      <div className="border border-indigo-600 mb-6"></div>
+      <div className="flex justify-center items-center ">
         <PaymentsFilters search={search} />
+        <Search />
       </div>
       {payments.length === 0 ? (
         <EmptyList />

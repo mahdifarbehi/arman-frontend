@@ -17,17 +17,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ModalContainer from "@/components/common/ModalContainer";
 import UserForm from "./UserForm";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Role, type User } from "@/utils/types";
 import { Checkbox } from "@/components/ui/checkbox";
-import UserAssignmentForm from "./UserAssignmentForm";
 
 function UsersTable({ data }: { data: User[] }) {
   const [open, setOpen] = useState(false);
-  const [UserAssignmentFormOpen, setUserAssignmentFormOpen] = useState(false);
   const [activeUser, setActiveUser] = useState<User | undefined>(undefined);
   const [userIds, setUserIds] = useState<number[]>([]);
 
@@ -54,36 +51,19 @@ function UsersTable({ data }: { data: User[] }) {
 
   return (
     <div className="border border-gray-200 rounded-xl">
-      <div className="m-16 flex justify-end items-center gap-4">
-        <NewUserForm />
-        <ModalContainer
-          dialogTitle="واگذاری به مدیر"
-          buttonText="واگذاری"
-          open={UserAssignmentFormOpen}
-          setOpen={setUserAssignmentFormOpen}
-        >
-          <UserAssignmentForm
-            user_ids={[1, 2, 3]}
-            setOpen={setUserAssignmentFormOpen}
-          />
-        </ModalContainer>
-      </div>
+
       {data.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع کاربران : {data.length}</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[10rem] text-right">سمت</TableHead>
-              <TableHead className="w-[8rem] text-right">
-                نام و نام خانوادگی
-              </TableHead>
-              <TableHead className="w-[8rem] text-right">شماره تماس</TableHead>
-              <TableHead className="w-[8rem] text-right">سرپرست</TableHead>
-              <TableHead className="w-[8rem] text-right">
-                تارگت ماهیانه
-              </TableHead>
-              <TableHead className="w-[8rem] text-right">واگذاری</TableHead>
-              <TableHead className="w-[15rem] text-right">عملیات</TableHead>
+              <TableHead className="text-center">سمت</TableHead>
+              <TableHead className="text-center">نام و نام خانوادگی</TableHead>
+              <TableHead className="text-center">شماره تماس</TableHead>
+              <TableHead className="text-center">سرپرست</TableHead>
+              <TableHead className="text-center">تارگت ماهیانه</TableHead>
+              <TableHead className="text-center">واگذاری</TableHead>
+              <TableHead className="text-center">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -134,7 +114,7 @@ const UserRow = ({
 
   return (
     <TableRow>
-      <TableCell className="w-[10rem] text-right">
+      <TableCell className="text-center">
         {role === Role.ADMIN
           ? "مدیر کل"
           : role === Role.PAYMENT_MANAGER
@@ -145,19 +125,17 @@ const UserRow = ({
           ? "فروشنده"
           : "مدیر فروش"}
       </TableCell>
-      <TableCell className="w-[8rem] text-right">{fullname}</TableCell>
-      <TableCell className="w-[8rem] text-right">{phone}</TableCell>
-      <TableCell className="w-[8rem] text-right">
-        {leader_user?.fullname}
-      </TableCell>
-      <TableCell className="w-[8rem] text-right">{monthly_target}</TableCell>
-      <TableCell className="w-[8rem] text-right">
+      <TableCell className="text-center">{fullname}</TableCell>
+      <TableCell className="text-center">{phone}</TableCell>
+      <TableCell className="text-center">{leader_user?.fullname}</TableCell>
+      <TableCell className="text-center">{monthly_target}</TableCell>
+      <TableCell className="text-center">
         <Checkbox
           checked={isChecked}
           onCheckedChange={(e) => handleAssignments(UserId, Boolean(e))}
         />
       </TableCell>
-      <TableCell className="w-[15rem] text-right flex gap-2">
+      <TableCell className="text-center flex justify-center gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => handleOpenDialog(user)} size="sm">
@@ -191,18 +169,5 @@ const UserRow = ({
 
 const MemoizedUserRow = memo(UserRow);
 
-function NewUserForm() {
-  const [open, setOpen] = useState(false);
-  return (
-    <ModalContainer
-      dialogTitle="کاربر جدید"
-      buttonText="کاربر جدید"
-      open={open}
-      setOpen={setOpen}
-    >
-      <UserForm setOpen={setOpen} />
-    </ModalContainer>
-  );
-}
 
 export default UsersTable;

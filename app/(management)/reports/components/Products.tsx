@@ -21,24 +21,22 @@ function Products() {
         <TableCaption>مجموع محصولات </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[8rem] text-right">عنوان</TableHead>
-            <TableHead className="w-[10rem] text-right">دسته بندی</TableHead>
-            <TableHead className="w-[8rem] text-right">مجموع فروش</TableHead>
-            <TableHead className="w-[15rem] text-right">
-              مجموع سود شرکت
-            </TableHead>
-            <TableHead className="w-[15rem] text-right">فروش موفق</TableHead>
-            <TableHead className="w-[15rem] text-right">فروش ناموفق</TableHead>
+            <TableHead className="text-center">عنوان</TableHead>
+            <TableHead className="text-center">دسته بندی</TableHead>
+            <TableHead className="text-center">مجموع فروش</TableHead>
+            <TableHead className="text-center">مجموع سود شرکت</TableHead>
+            <TableHead className="text-center">فروش موفق</TableHead>
+            <TableHead className="text-center">فروش ناموفق</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell className="w-[10rem] text-right">سایت وردپرس</TableCell>
-            <TableCell className="w-[8rem] text-right">خدمات سایت</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">11</TableCell>
-            <TableCell className="w-[8rem] text-right">23</TableCell>
+            <TableCell className="text-center">سایت وردپرس</TableCell>
+            <TableCell className="text-center">خدمات سایت</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">11</TableCell>
+            <TableCell className="text-center">23</TableCell>
           </TableRow>
         </TableBody>
       </Table>

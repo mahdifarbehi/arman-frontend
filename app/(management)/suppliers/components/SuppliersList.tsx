@@ -1,4 +1,3 @@
-
 import { fetchSuppliers } from "@/utils/actions";
 import SuppliersTable from "./SuppliersTable";
 import Search from "@/components/common/Search";
@@ -21,17 +20,18 @@ async function SuppliersList({
   if (!success) return <CustomErrorBoundary message={message} />;
 
   return (
-    <div className="">
-      <h1 className="mb-6 -mt-4 text-4xl text-center font-bold">
-        تامین کنندگان
+    <div>
+      <h1 className="mb-3 mt-4 text-4xl font-extrabold text-gray-700 dark:text-white">
+        لیست تامین کنندگان
       </h1>
-      <div className="flex w-full items-center gap-6 mb-6 ">
+      <div className="border border-indigo-600 mb-6"></div>
+      <div className="flex justify-between items-center w-full mb-6">
         <div className="flex items-center gap-6">
-        <Search />
-        <SuppliersFilters search={search} />
+          <SuppliersFilters search={search} />
         </div>
-        <div className="mt-6 mr-10">
-        <NewSupplierForm />
+        <div className="flex">
+          <NewSupplierForm />
+          <Search />
         </div>
       </div>
 
@@ -39,6 +39,5 @@ async function SuppliersList({
     </div>
   );
 }
-
 
 export default SuppliersList;

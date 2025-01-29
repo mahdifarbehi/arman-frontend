@@ -823,19 +823,17 @@ export async function fetchPayments(
 }
 
 export async function handlePaymentStatusAction(
-  paymentId:number,
-  status:string
+  paymentId: number,
+  status: string
 ): Promise<{
   success: boolean;
   data: any;
   message?: string;
 }> {
-
-  
   try {
     const response = await axios.put(
       `/api/transaction-utils/payment-status/${paymentId}`,
-      { status:status }
+      { status: status }
     );
     revalidatePath("payments");
     return {
@@ -1647,7 +1645,7 @@ export const handleFileUpload = async (
 ): Promise<{ message: string; success: boolean; data: any } | undefined> => {
   try {
     const rawData = Object.fromEntries(formData.entries());
-    
+
     // @todo
     // validateWithZodSchema(fileSchema, rawData);
 

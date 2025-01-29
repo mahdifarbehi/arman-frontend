@@ -21,31 +21,27 @@ function Sellers() {
         <TableCaption>مجموع فروشندگان </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[8rem] text-right">نام فروشنده</TableHead>
-            <TableHead className="w-[8rem] text-right">نام مدیر فروش</TableHead>
-            <TableHead className="w-[8rem] text-right">تارگت ماهیانه</TableHead>
-            <TableHead className="w-[8rem] text-right">مجموع فروش </TableHead>
-            <TableHead className="w-[8rem] text-right"> فروش موفق</TableHead>
-            <TableHead className="w-[8rem] text-right"> فروش ناموفق </TableHead>
-            <TableHead className="w-[8rem] text-right">
-              مجموع پورسانت{" "}
-            </TableHead>
-            <TableHead className="w-[8rem] text-right">تارگت ماهیانه</TableHead>
-            <TableHead className="w-[8rem] text-right">
-              مجموع سود شرکت
-            </TableHead>
+            <TableHead className="text-center">نام فروشنده</TableHead>
+            <TableHead className="text-center">نام مدیر فروش</TableHead>
+            <TableHead className="text-center">تارگت ماهیانه</TableHead>
+            <TableHead className="text-center">مجموع فروش </TableHead>
+            <TableHead className="text-center"> فروش موفق</TableHead>
+            <TableHead className="text-center"> فروش ناموفق </TableHead>
+            <TableHead className="text-center">مجموع پورسانت </TableHead>
+            <TableHead className="text-center">تارگت ماهیانه</TableHead>
+            <TableHead className="text-center">مجموع سود شرکت</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell className="w-[8rem] text-right">بهرام بهرامی</TableCell>
-            <TableCell className="w-[8rem] text-right">فرهاد فرهادی </TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10</TableCell>
-            <TableCell className="w-[8rem] text-right">10</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
+            <TableCell className="text-center">بهرام بهرامی</TableCell>
+            <TableCell className="text-center">فرهاد فرهادی </TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10</TableCell>
+            <TableCell className="text-center">10</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
           </TableRow>
         </TableBody>
       </Table>

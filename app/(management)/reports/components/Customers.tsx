@@ -21,18 +21,16 @@ function Customers() {
         <TableCaption>مجموع مشتریان </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[8rem] text-right">نام مشتری</TableHead>
-            <TableHead className="w-[8rem] text-right">مجموع خرید</TableHead>
-            <TableHead className="w-[15rem] text-right">
-              مجموع سود شرکت
-            </TableHead>
+            <TableHead className="text-center">نام مشتری</TableHead>
+            <TableHead className="text-center">مجموع خرید</TableHead>
+            <TableHead className="text-center">مجموع سود شرکت</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell className="w-[8rem] text-right">بهرام بهرامی</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
+            <TableCell className="text-center">بهرام بهرامی</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
           </TableRow>
         </TableBody>
       </Table>

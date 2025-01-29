@@ -45,7 +45,7 @@ function SuppliersFilters({ search }: { search?: string }) {
 
   return (
     <div className=" gap-2 flex flex-col">
-        <Label>دسته بندی</Label>
+      {/* <Label>انتخاب دسته بندی</Label> */}
       <div className="flex gap-4 items-center">
         <Select
           dir="rtl"
@@ -70,15 +70,18 @@ function SuppliersFilters({ search }: { search?: string }) {
           </SelectContent>
         </Select>
 
-     
-      <div className=" gap-4 flex">
-        <Button className="w-32" onClick={handleFilters}>
-          فیلتر
-        </Button>
-        <Button className="w-32" variant="outline" onClick={handleResetFilters}>
-          حذف فیلتر
-        </Button>
-      </div>
+        <div className=" gap-4 flex">
+          <Button className="w-32" onClick={handleFilters}>
+            فیلتر
+          </Button>
+          <Button
+            className="w-32"
+            variant="outline"
+            onClick={handleResetFilters}
+          >
+            حذف فیلتر
+          </Button>
+        </div>
       </div>
     </div>
   );

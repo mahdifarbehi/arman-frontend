@@ -21,22 +21,20 @@ function Origins() {
         <TableCaption>مجموع مبدا ها </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[8rem] text-right">نام مبدا </TableHead>
-            <TableHead className="w-[8rem] text-right">
-              مجموع سود شرکت
-            </TableHead>
-            <TableHead className="w-[8rem] text-right">مجموع فروش </TableHead>
-            <TableHead className="w-[8rem] text-right"> فروش موفق</TableHead>
-            <TableHead className="w-[8rem] text-right"> فروش ناموفق </TableHead>
+            <TableHead className="text-center">نام مبدا </TableHead>
+            <TableHead className="text-center">مجموع سود شرکت</TableHead>
+            <TableHead className="text-center">مجموع فروش </TableHead>
+            <TableHead className="text-center"> فروش موفق</TableHead>
+            <TableHead className="text-center"> فروش ناموفق </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell className="w-[8rem] text-right">سایت</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10 میلیون</TableCell>
-            <TableCell className="w-[8rem] text-right">10</TableCell>
-            <TableCell className="w-[8rem] text-right">10</TableCell>
+            <TableCell className="text-center">سایت</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10 میلیون</TableCell>
+            <TableCell className="text-center">10</TableCell>
+            <TableCell className="text-center">10</TableCell>
           </TableRow>
         </TableBody>
       </Table>

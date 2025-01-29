@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import ModalContainer from "@/components/common/ModalContainer";
 import OriginForm from "./OriginForm";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -42,17 +41,14 @@ function OriginsTable({ data }: { data }) {
   const origins = data;
   return (
     <div className="border border-gray-200 rounded-xl ">
-      <div className="m-8 flex justify-end items-center gap-4">
-        <NewOriginForm />
-      </div>
       {origins.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع مبدا ها : {origins.length}</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[8rem] text-right">عنوان</TableHead>
-              <TableHead className="w-[8rem] text-right"> توضیحات </TableHead>
-              <TableHead className="w-[15rem] text-right">عملیات</TableHead>
+              <TableHead className="text-center">عنوان</TableHead>
+              <TableHead className="text-center"> توضیحات </TableHead>
+              <TableHead className="text-center">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -60,13 +56,9 @@ function OriginsTable({ data }: { data }) {
               const { id: originId, title, description } = origin;
               return (
                 <TableRow key={originId}>
-                  <TableCell className="w-[10rem] text-right">
-                    {title}
-                  </TableCell>
-                  <TableCell className="w-[8rem] text-right">
-                    {description}
-                  </TableCell>
-                  <TableCell className="w-[15rem] text-right flex gap-2">
+                  <TableCell className="text-center">{title}</TableCell>
+                  <TableCell className="text-center">{description}</TableCell>
+                  <TableCell className="text-center flex justify-center gap-2">
                     <Dialog open={open} onOpenChange={setOpen}>
                       <DialogTrigger asChild>
                         <Button
@@ -109,20 +101,6 @@ function OriginsTable({ data }: { data }) {
         </Table>
       )}
     </div>
-  );
-}
-
-function NewOriginForm() {
-  const [open, setOpen] = useState(false);
-  return (
-    <ModalContainer
-      dialogTitle=" مبدا جدید"
-      buttonText=" مبدا جدید"
-      open={open}
-      setOpen={setOpen}
-    >
-      <OriginForm setOpen={setOpen} />
-    </ModalContainer>
   );
 }
 
