@@ -8,6 +8,14 @@ export enum TransactionStatus {
   COMPLETED = "COMPLETED",
   FAILED = "FAILED",
 }
+
+export enum TimeRange {
+  ONE_DAY = "ONE_DAY",
+  THREE_DAYS = "THREE_DAYS",
+  ONE_WEEK = "ONE_WEEK",
+  ONE_MONTH = "ONE_MONTH",
+}
+
 export enum TaskStatus {
   NEW = "NEW",
   COMPLETED = "COMPLETED",

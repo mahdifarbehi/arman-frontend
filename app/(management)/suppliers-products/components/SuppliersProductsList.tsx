@@ -47,7 +47,7 @@ function SuppliersProductsList({ search }: { search: string }) {
         محصولات تامین کنندگان
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
-      <div className="my-16 flex justify-between items-center">
+      <div className="my-8 flex justify-between items-center">
         <NewSupplierProductForm />
         <Search />
       </div>

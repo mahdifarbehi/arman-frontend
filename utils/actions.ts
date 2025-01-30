@@ -442,14 +442,11 @@ export async function createTransactionPayment(
 //-------------Transactions-------------------------
 
 export async function fetchTransactions(
-  dateTimeRange?: {
-    startDate: string | null;
-    endDate: string | null;
-  },
   search?: string,
   customerId?: string,
   status?: string,
-  categoryId?: string
+  categoryId?: string,
+  date?: string
 ): Promise<{
   success: boolean;
   data: any;
@@ -457,37 +454,29 @@ export async function fetchTransactions(
 }> {
   try {
     const params = new URLSearchParams();
-    if (dateTimeRange?.startDate && dateTimeRange.startDate !== "") {
-      params.append("startDate", dateTimeRange.startDate);
-    }
-    if (dateTimeRange?.endDate && dateTimeRange.endDate !== "") {
-      params.append("endDate", dateTimeRange.endDate);
-    }
     if (search) {
       params.append("search", search);
     }
     if (customerId) {
       params.append("customer_id", customerId);
     }
-
     if (status) {
       params.append("status", status);
     }
     if (categoryId) {
       params.append("category_id", categoryId);
     }
+    if (date) {
+      params.append("date", date);
+    }
+    console.log(params);
+    console.log(status);
+    console.log(date);
     const api = `/api/transaction/transaction${
       params.toString() ? `?${params.toString()}` : ""
     }`;
+
     const response = await axios.get(api);
-    return { success: true, data: response.data };
-  } catch (error) {
-    return renderError(error);
-  }
-}
-export async function fetchTransaction(id: number) {
-  try {
-    const response = await axios.get(`/api/generic/transaction/${id}`);
     return { success: true, data: response.data };
   } catch (error) {
     return renderError(error);
@@ -1732,6 +1721,35 @@ export const handlePaymentAttachmentUpload = async (
       data: response.data,
     };
   } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const categoriesData = async () => {
+  try {
+    const { data } = await axios.get("/api/generic/category");
+    return data;
+  } catch (error) {
+    console.error("خطا در دریافت دسته‌بندی‌ها:", error);
+    throw error;
+  }
+};
+
+export const categoriesSendData = async (data) => {
+  try {
+    const response = await axios.post("/api/auth-utils/assign-category", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return {
+      success: true,
+      message: "دسته‌بندی با موفقیت تغییر کرد.",
+      data: response.data, // برگرداندن داده‌های به‌روز شده از سرور
+    };
+  } catch (error) {
+    console.error("خطا در ارسال داده‌ها:", error.response);
     return renderError(error);
   }
 };

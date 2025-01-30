@@ -40,7 +40,7 @@ export function StatusButton({
       {pending ? (
         <>
           <RxReload className={`mr-2 h-4 w-4 animate-spin ${className}`} />
-           منتظر بمانید...
+          منتظر بمانید...
         </>
       ) : (
         text
@@ -72,7 +72,6 @@ export function SubmitButton({
     </Button>
   );
 }
-
 
 export const IconButton = ({ actionType }: { actionType: actionType }) => {
   const { pending } = useFormStatus();

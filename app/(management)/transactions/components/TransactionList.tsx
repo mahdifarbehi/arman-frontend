@@ -6,31 +6,23 @@ import Search from "@/components/common/Search";
 import CustomErrorBoundary from "../../CustomErrorBoundary";
 
 async function TransactionList({
-  dateTimeRange,
   search,
   customerId,
   status,
   categoryId,
+  date,
 }: {
-  dateTimeRange:
-    | { startDate: string | null; endDate: string | null }
-    | undefined;
   search?: string;
   customerId?: string;
   status: string;
   categoryId: string;
+  date: string;
 }) {
   const {
     data: transactions,
     success,
     message,
-  } = await fetchTransactions(
-    dateTimeRange,
-    search,
-    customerId,
-    status,
-    categoryId
-  );
+  } = await fetchTransactions(search, customerId, status, categoryId, date);
   if (!success) return <CustomErrorBoundary message={message} />;
 
   return (

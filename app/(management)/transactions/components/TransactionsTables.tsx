@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Table,
@@ -16,7 +17,7 @@ function TransactionsTable({ data }: { data }) {
   const transactions = data;
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-x-auto">
+    <div className="border border-gray-200 rounded-xl p-4">
       <Table dir="rtl">
         <TableCaption>مجموع معاملات : {transactions.length}</TableCaption>
         <TableHeader>

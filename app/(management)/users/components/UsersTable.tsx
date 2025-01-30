@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, memo } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Dialog,
@@ -22,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Role, type User } from "@/utils/types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { categoriesData, categoriesSendData } from "@/utils/actions";
 
 function UsersTable({ data }: { data: User[] }) {
   const [open, setOpen] = useState(false);
@@ -51,7 +53,6 @@ function UsersTable({ data }: { data: User[] }) {
 
   return (
     <div className="border border-gray-200 rounded-xl">
-
       {data.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع کاربران : {data.length}</TableCaption>
@@ -112,6 +113,64 @@ const UserRow = ({
     monthly_target,
   } = user;
 
+  const { toast } = useToast(); // دریافت تابع toast
+  const [allCategories, setAllCategories] = useState([]);
+  const [categoriesUser, setCategoriesUser] = useState([]);
+
+  const accessHandler = (user) => {
+    if (user.categories) {
+      const categoryIds = user.categories.map((item) => item.category.id);
+      setCategoriesUser(categoryIds);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await categoriesData();
+        if (data) setAllCategories(data);
+      } catch (error) {
+        console.error("خطا در دریافت دسته‌بندی‌ها:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleCheckboxChange = ({ categoryId, checked }) => {
+    setCategoriesUser((prevSelected) =>
+      checked
+        ? [...prevSelected, categoryId]
+        : prevSelected.filter((id) => id !== categoryId)
+    );
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        category_ids: categoriesUser,
+        user_id: user.id,
+      };
+
+      const response = await categoriesSendData(data);
+
+      toast({
+        title: "موفقیت‌آمیز!",
+        description: response.message,
+      });
+
+      window.location.reload();
+    } catch (error) {
+      console.error("خطا در بروزرسانی دسترسی‌ها:", error);
+
+      toast({
+        variant: "destructive",
+        title: "خطا!",
+        description: "خطا در بروزرسانی دسترسی‌ها",
+      });
+    }
+  };
+
   return (
     <TableRow>
       <TableCell className="text-center">
@@ -159,15 +218,43 @@ const UserRow = ({
             <UserForm user={activeUser} edit setOpen={setOpen} />
           </DialogContent>
         </Dialog>
-        <Button variant={"outline"} size={"sm"}>
-          دسترسی ها
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => accessHandler(user)}
+              variant="outline"
+              size="sm"
+            >
+              دسترسی‌ها
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader className="flex flex-row-reverse justify-between items-center">
+              <DialogTitle>ویرایش دسترسی‌ها</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-2">
+              {allCategories.map((category) => (
+                <label key={category.id} className="flex items-center gap-2">
+                  <Checkbox
+                    checked={categoriesUser.includes(category.id)} // چک می‌کنیم که آیا دسته‌بندی در دسته‌بندی‌های انتخاب‌شده است یا نه
+                    onCheckedChange={(checked) =>
+                      handleCheckboxChange({ categoryId: category.id, checked })
+                    }
+                  />
+                  {category.title}
+                </label>
+              ))}
+            </div>
+            <Button onClick={handleSubmit} className="mt-4">
+              ذخیره تغییرات
+            </Button>
+          </DialogContent>
+        </Dialog>
       </TableCell>
     </TableRow>
   );
 };
 
 const MemoizedUserRow = memo(UserRow);
-
 
 export default UsersTable;

@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PersianDateTimePicker from "@/components/common/PersianDateTimePicker";
 import { Button } from "@/components/ui/button";
-import { persianToISO } from "@/utils/dateConvertor";
-import { DateObject } from "react-multi-date-picker";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "@/store/storeSlice";
@@ -18,77 +15,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TransactionStatus } from "@/utils/types";
+import { TimeRange, TransactionStatus } from "@/utils/types";
 
 function TransactionFilters({ search }: { search?: string }) {
   const dispatch = useDispatch<AppDispatch>();
   const { categories } = useSelector((state: RootState) => state.store);
 
-  const [dtRange, setDtRange] = useState<{
-    startDate: string | null;
-    endDate: string | null;
-  } | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [date, setDate] = useState<string | null>(null);
+
   let filteredLink = "";
-  const now = new DateObject();
-  const firstDatetime = new DateObject("1970-01-01T00:00:00Z");
   const searchTerm = search ? `search=${search}` : "";
   const router = useRouter();
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategories());
     }
   }, [dispatch, categories]);
 
-  const handleDateChange = (
-    date: string | null | { startDate: string | null; endDate: string | null }
-  ) => {
-    if (!date) {
-      setDtRange(null);
-    } else if (typeof date === "object") {
-      setDtRange({
-        startDate: date.startDate
-          ? persianToISO(date.startDate).toString()
-          : null,
-        endDate: date.endDate ? persianToISO(date.endDate).toString() : null,
-      });
-    } else {
-      setDtRange({
-        startDate: persianToISO(date).toString(),
-        endDate: null,
-      });
-    }
-  };
-
   const handleFilters = () => {
     filteredLink = `/transactions?${new URLSearchParams({
       ...(searchTerm ? { search } : {}),
-      ...(dtRange?.startDate ? { startDate: dtRange.startDate } : {}),
-      ...(dtRange?.endDate ? { endDate: dtRange.endDate } : {}),
       ...(category ? { categoryId: category } : {}),
       ...(status ? { status } : {}),
+      ...(date ? { date } : {}),
     }).toString()}`;
+
     router.push(filteredLink);
   };
+
   const handleResetFilters = () => {
-    setDtRange(null);
     setCategory(null);
     setStatus(null);
+    setDate(null);
     filteredLink = `/transactions?${searchTerm}`;
+
     router.push(filteredLink);
   };
 
   return (
     <div className="flex gap-4 mb-8">
-      {/* <PersianDateTimePicker
-        text="فیلتر بر اساس تاریخ و ساعت"
-        name="datetime"
-        range={true}
-        minDate={firstDatetime}
-        maxDate={now}
-        onDateChange={handleDateChange}
-      /> */}
       <div className="mb-2">
         <Label>دسته بندی</Label>
         <Select
@@ -134,6 +102,36 @@ function TransactionFilters({ search }: { search?: string }) {
                     : status === TransactionStatus.FAILED
                     ? "ناموفق"
                     : "موفق"}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="mb-2">
+        <Label>بازه زمانی</Label>
+        <Select
+          dir="rtl"
+          name="date"
+          value={date}
+          onValueChange={(value) => setDate(value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="انتخاب بازه زمانی" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {Object.values(TimeRange).map((time) => (
+                <SelectItem key={time} value={time}>
+                  {time === TimeRange.ONE_DAY
+                    ? "یک روز"
+                    : time === TimeRange.THREE_DAYS
+                    ? "سه روز"
+                    : time === TimeRange.ONE_WEEK
+                    ? "یک هفته"
+                    : time === TimeRange.ONE_MONTH
+                    ? "یک ماه"
+                    : ""}
                 </SelectItem>
               ))}
             </SelectGroup>
