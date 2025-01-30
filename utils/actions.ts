@@ -441,6 +441,17 @@ export async function createTransactionPayment(
 }
 //-------------Transactions-------------------------
 
+export async function fetchTransaction(id: number) {
+  try {
+    const response = await axios.get(`/api/generic/transaction/${id}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    return renderError(error);
+  }
+}
+
+
+
 export async function fetchTransactions(
   search?: string,
   customerId?: string,
