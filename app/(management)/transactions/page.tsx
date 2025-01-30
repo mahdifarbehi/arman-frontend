@@ -5,29 +5,26 @@ export const dynamic = "force-dynamic";
 
 async function TransactionsPage(props: {
   searchParams: Promise<{
-    startDate?: string;
-    endDate?: string;
     search?: string;
     customerId?: string;
     categoryId?: string;
     status: string;
+    date: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const dateTimeRange = {
-    startDate: searchParams?.startDate || "",
-    endDate: searchParams?.endDate || "",
-  };
+
   const searchTerm = searchParams.search || "";
   const customerId = searchParams.customerId || "";
 
   const status = searchParams.status || "";
+  const date = searchParams.date || "";
   const categoryId = searchParams.categoryId || "";
   return (
     <section>
       <Suspense fallback={<TableSkeleton />}>
         <TransactionList
-          dateTimeRange={dateTimeRange}
+          date={date}
           search={searchTerm}
           customerId={customerId}
           status={status}
