@@ -441,6 +441,21 @@ export async function createTransactionPayment(
 }
 //-------------Transactions-------------------------
 
+export async function fetchTransactionInvoice(transactionId: number): Promise<{
+  success: boolean;
+  data: any;
+  message?: string;
+}> {
+  try {
+    const response = await axios.get(
+      `/api/transaction-utils/invoice/${transactionId}`
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    renderError(error);
+  }
+}
+
 export async function fetchTransaction(id: number) {
   try {
     const response = await axios.get(`/api/generic/transaction/${id}`);
@@ -449,8 +464,6 @@ export async function fetchTransaction(id: number) {
     return renderError(error);
   }
 }
-
-
 
 export async function fetchTransactions(
   search?: string,

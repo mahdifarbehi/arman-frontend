@@ -37,8 +37,9 @@ function ProductsTable({
   //     if (open === false) setActiveProduct(null);
   //   }, [open, activeProduct]);
   const products = data;
- 
-  const handleDelete = async (id: number) => {  
+  console.log(products);
+
+  const handleDelete = async (id: number) => {
     const { message, success } = await deleteTransactionProduct(id);
     if (message) toast({ description: message });
     if (success) onRevalidation();
@@ -75,9 +76,9 @@ function ProductsTable({
         <TableBody>
           {products?.map((product, index) => {
             const {
-              
+              id: productId,
               product_supplier: {
-                id,
+                id: supplierId,
                 discount_price,
                 selling_price,
                 unit,
@@ -88,7 +89,7 @@ function ProductsTable({
               description,
             } = product;
             return (
-              <TableRow key={`${id}-${index}`}>
+              <TableRow key={`${productId}-${index}`}>
                 <TableCell className="w-[10rem] text-right">{title}</TableCell>
                 <TableCell className="w-[12rem] text-right">{unit}</TableCell>
                 <TableCell className="w-[12rem] text-right">
@@ -109,7 +110,7 @@ function ProductsTable({
                 <TableCell className="w-[5rem] text-right flex gap-2">
                   <Button
                     onClick={() => {
-                      handleDelete(id);
+                      handleDelete(productId);
                     }}
                     size="sm"
                   >

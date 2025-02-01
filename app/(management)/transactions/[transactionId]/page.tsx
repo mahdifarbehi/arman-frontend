@@ -15,6 +15,7 @@ import { AppDispatch } from "@/store/store";
 import { useRouter } from "next/navigation";
 // Lazy-loaded components
 const PaymentsList = lazy(() => import("../components/payments/PaymentsList"));
+const Invoice = lazy(() => import("../components/TransactionInvoice"));
 const TasksList = lazy(() => import("../components/tasks/TasksList"));
 const ProductsList = lazy(() => import("../components/products/ProductsList"));
 const CustomersList = lazy(
@@ -118,6 +119,9 @@ function TransactionPage() {
         className="w-full border border-gray-200 p-4 rounded-xl flex flex-col justify-start items-center"
       >
         <TabsList className="w-128">
+          <TabsTrigger value="invoice" className="w-32" disabled={!editMode}>
+            فاکتور
+          </TabsTrigger>
           <TabsTrigger value="payment" className="w-32" disabled={!editMode}>
             پرداخت
           </TabsTrigger>
@@ -131,6 +135,11 @@ function TransactionPage() {
             مشتری
           </TabsTrigger>
         </TabsList>
+        <TabsContent value="invoice" className="w-full">
+          <Suspense fallback={<TableSkeleton />}>
+            <Invoice transactionId={transaction?.id} />
+          </Suspense>
+        </TabsContent>
         <TabsContent value="payment" className="w-full">
           <Suspense fallback={<TableSkeleton />}>
             <PaymentsList transactionId={transaction?.id} />
