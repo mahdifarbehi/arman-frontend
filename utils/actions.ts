@@ -600,7 +600,7 @@ export async function fetchCustomerOrigin(): Promise<{
   data: any;
 }> {
   try {
-    const response = await axios.get("/api/generic/customer-origin");
+    const response = await axios.get("/api/transaction-utils/customer-origin");
     return { success: true, data: response.data, message: "ok" };
   } catch (error) {
     return renderError(error);

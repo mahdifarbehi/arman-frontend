@@ -1,5 +1,5 @@
 import PersianDate from "persian-date";
-import  DateObject from "react-date-object";
+import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
 
 /**
@@ -8,6 +8,9 @@ import persian from "react-date-object/calendars/persian";
  * @returns {string} - The Persian date-time string in the format "YYYY/MM/DD HH:mm".
  */
 export function isoToPersian(isoDateTime: string): string {
+  if (!isoDateTime) {
+    return "";
+  }
   try {
     const jsDate = new Date(isoDateTime);
 
@@ -134,14 +137,14 @@ export function persianToISO(persianDateTime: string): string {
       throw new Error("Invalid DateObject conversion.");
     }
 
+    let tehranDate = new Date(jsDate.getTime() + 3.5 * 60 * 60 * 1000);
     // Step 8: Return ISO 8601 formatted string
-    return jsDate.toISOString();
+    return tehranDate.toISOString();
   } catch (error) {
     console.error("Error in persianToISO:", error.message);
     throw new Error("Failed to convert Persian date to ISO.");
   }
 }
-
 
 /**
  * Converts Persian numerals in a string to English numerals.

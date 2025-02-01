@@ -28,25 +28,35 @@ export const links: LinkCategory[] = [
     ],
   },
   {
-    title: "معاملات",
+    title: "فروشندگان",
     children: [
-      { label: "لیست معاملات", href: "/transactions", icon: GrTransaction },
-    ],
-  },
-  {
-    title: "سرویس ها",
-    children: [
-      { label: "تامین کنندگان", href: "/suppliers", icon: FaUsers },
       {
         label: "مشتریان",
         href: "/customers",
         icon: FaUsers,
       },
+      { label: "معاملات", href: "/transactions", icon: GrTransaction },
+    ],
+  },
+  {
+    title: "محصولات",
+    children: [
+      {
+        label: "محصولات",
+        href: "/reference-data/products",
+        icon: AiFillProduct,
+      },
+      { label: "تامین کنندگان", href: "/suppliers", icon: FaUsers },
       {
         label: "محصولات تامین کنندگان",
         href: "/suppliers-products",
         icon: AiFillProduct,
       },
+    ],
+  },
+  {
+    title: "امور مالی",
+    children: [
       {
         label: "پرداخت ها",
         href: "/payments",
@@ -54,17 +64,8 @@ export const links: LinkCategory[] = [
       },
     ],
   },
-
   {
-    title: "گزارشات",
-    children: [{ label: "لیست گزارشات", href: "/reports", icon: TbReport }],
-  },
-  {
-    title: "کاربران",
-    children: [{ label: "کاربران", href: "/users", icon: FaUsers }],
-  },
-  {
-    title: "اطلاعات مرجع",
+    title: "مدیریت",
     children: [
       {
         label: " دسته بندی ها",
@@ -86,11 +87,8 @@ export const links: LinkCategory[] = [
         href: "/reference-data/tasks",
         icon: GrTask,
       },
-      {
-        label: "محصولات",
-        href: "/reference-data/products",
-        icon: AiFillProduct,
-      },
+      { label: "گزارشات", href: "/reports", icon: TbReport },
+      { label: "کاربران", href: "/users", icon: FaUsers },
     ],
   },
 ];

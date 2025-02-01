@@ -63,12 +63,12 @@ function PaymentsTable({ data }: { data }) {
                 title,
                 customer: { fullname: customerName, phones },
                 category: { title: categoryTitle },
-                status,
                 created_by_user: { fullname: sales_agent },
               },
               status_change_date,
               payment_type,
               amount,
+              status,
             } = payment;
             return (
               <TableRow key={paymentId}>
