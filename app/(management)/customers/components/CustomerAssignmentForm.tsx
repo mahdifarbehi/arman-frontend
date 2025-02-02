@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { SubmitButton } from "@/components/form/Buttons";
+import {
+  SubmitButton,
+  SubmitButtonWithReload,
+} from "@/components/form/Buttons";
 import FormContainer from "@/components/form/FormContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
@@ -43,6 +46,12 @@ function CustomerAssignmentForm({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent default form submission
+    event.currentTarget.submit(); // Submit form normally
+    window.location.reload(); // Force page reload
+  };
+
   return (
     <FormContainer action={customerAssignmentAction} setOpen={setOpen}>
       <div className="grid md:grid-cols-1 gap-4 mt-4 w-64">
@@ -78,7 +87,7 @@ function CustomerAssignmentForm({
           </Select>
         </div>
       </div>
-      <SubmitButton text="ذخیره" className=" w-full mt-8 " />
+      <SubmitButtonWithReload text="ذخیره" className=" w-full mt-8 " />
     </FormContainer>
   );
 }

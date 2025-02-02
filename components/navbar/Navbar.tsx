@@ -28,7 +28,7 @@ function Navbar({ SidebarTrigger }: { SidebarTrigger: ReactNode }) {
           <DarkMode />
           <div className="border w-32 h-10 rounded-full flex gap-2 justify-between items-center px-2">
             {token && <Logout />}
-            <UserIcon />
+            {/* <UserIcon /> */}
           </div>
         </div>
         {/* <NavSearch /> */}

@@ -23,10 +23,9 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import type { Customer } from "@/utils/types";
 import { CustomerStatus } from "@/utils/types";
-function CustomersTable({ data }: { data }) {
+function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
   const [open, setOpen] = useState(false);
   const [activeCustomer, setActiveCustomer] = useState<Customer | null>(null);
-  const [customerIds, setCustomerIds] = useState<number[]>([]);
 
   const handleOpenDialog = (customer: Customer) => {
     setActiveCustomer(customer);

@@ -73,6 +73,39 @@ export function SubmitButton({
   );
 }
 
+export function SubmitButtonWithReload({
+  className = "",
+  text = "submit",
+  size = "lg",
+}: SubmitButtonProps) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className={`capitalize ${className}`}
+      size={size}
+      onClick={() => {
+        if (!pending) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 500); // Reload after submission
+        }
+      }}
+    >
+      {pending ? (
+        <>
+          <RxReload className="mr-2 h-4 w-4 animate-spin" />
+          منتظر بمانید...
+        </>
+      ) : (
+        text
+      )}
+    </Button>
+  );
+}
+
 export const IconButton = ({ actionType }: { actionType: actionType }) => {
   const { pending } = useFormStatus();
 

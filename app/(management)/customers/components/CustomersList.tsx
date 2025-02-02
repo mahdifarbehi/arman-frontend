@@ -102,7 +102,7 @@ function CustomersList({
         <Search />
       </div>
 
-      <CustomersTable data={customers} />
+      <CustomersTable data={customers} setCustomerIds={setCustomerIds} />
     </div>
   );
 }
