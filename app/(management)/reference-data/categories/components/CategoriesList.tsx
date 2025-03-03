@@ -12,25 +12,29 @@ function CategoryList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Fetch categories
-  useEffect(() => {
-    const fetchCategoriesData = async () => {
-      setIsLoading(true);
-      try {
-        const { data, success, message } = await fetchCategories();
-        if (success) {
-          setCategories(data);
-        } else {
-          setMessage(message || "خطایی رخ داده است");
-        }
-      } catch (error) {
-        setMessage("خطا در برقراری ارتباط با سرور");
-      } finally {
-        setIsLoading(false);
+  const fetchCategoriesData = async () => {
+    setIsLoading(true);
+    try {
+      const { data, success, message } = await fetchCategories();
+      if (success) {
+        setCategories(data);
+      } else {
+        setMessage(message || "خطایی رخ داده است");
       }
-    };
+    } catch (error) {
+      setMessage("خطا در برقراری ارتباط با سرور");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCategoriesData();
   }, []);
+
+  const handleCategoriesSubmit = () => {
+    fetchCategoriesData();
+  };
 
   if (isLoading) return <p>در حال بارگذاری...</p>;
   if (!categories.length) return <CustomErrorBoundary message={message} />;
@@ -42,14 +46,18 @@ function CategoryList() {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-start items-center gap-4">
-        <NewCategoryForm />
+        <NewCategoryForm handleCategoriesSubmit={handleCategoriesSubmit} />
       </div>
       <CategoryTable data={categories} />
     </div>
   );
 }
 
-function NewCategoryForm() {
+function NewCategoryForm({
+  handleCategoriesSubmit,
+}: {
+  handleCategoriesSubmit: () => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -58,7 +66,10 @@ function NewCategoryForm() {
       open={open}
       setOpen={setOpen}
     >
-      <CategoryForm setOpen={setOpen} />
+      <CategoryForm
+        setOpen={setOpen}
+        onCategorySubmit={handleCategoriesSubmit}
+      />
     </ModalContainer>
   );
 }

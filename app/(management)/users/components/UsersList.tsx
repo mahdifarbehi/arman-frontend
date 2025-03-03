@@ -15,25 +15,29 @@ function UsersList({ search, role }: { search?: string; role: string }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [UserAssignmentFormOpen, setUserAssignmentFormOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchUsersData = async () => {
-      setIsLoading(true);
-      try {
-        const { data, success, message } = await fetchUsers(search, role);
-        if (success) {
-          setUsers(data);
-        } else {
-          setMessage(message || "خطایی رخ داده است");
-        }
-      } catch (error) {
-        setMessage("خطا در برقراری ارتباط با سرور");
-      } finally {
-        setIsLoading(false);
+  const fetchUsersData = async () => {
+    setIsLoading(true);
+    try {
+      const { data, success, message } = await fetchUsers(search, role);
+      if (success) {
+        setUsers(data);
+      } else {
+        setMessage(message || "خطایی رخ داده است");
       }
-    };
+    } catch (error) {
+      setMessage("خطا در برقراری ارتباط با سرور");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUsersData();
   }, [search, role]);
+
+  const handleUserSubmit = () => {
+    fetchUsersData();
+  };
 
   if (isLoading) return <p>در حال بارگذاری...</p>;
   if (!users.length) return <CustomErrorBoundary message={message} />;
@@ -45,7 +49,7 @@ function UsersList({ search, role }: { search?: string; role: string }) {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-start items-center gap-4">
-        <NewUserForm />
+        <NewUserForm handleUserSubmit={handleUserSubmit} />
         <ModalContainer
           dialogTitle="واگذاری به مدیر"
           buttonText="واگذاری"
@@ -67,7 +71,7 @@ function UsersList({ search, role }: { search?: string; role: string }) {
   );
 }
 
-function NewUserForm() {
+function NewUserForm({ handleUserSubmit }: { handleUserSubmit: () => void }) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -76,7 +80,7 @@ function NewUserForm() {
       open={open}
       setOpen={setOpen}
     >
-      <UserForm setOpen={setOpen} />
+      <UserForm setOpen={setOpen} onUserSubmit={handleUserSubmit} />
     </ModalContainer>
   );
 }

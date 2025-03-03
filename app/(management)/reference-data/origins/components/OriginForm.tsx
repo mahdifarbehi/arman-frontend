@@ -1,5 +1,5 @@
 "use client";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { SubmitButton } from "@/components/form/Buttons";
 // import { Origin } from "@/utils/types";
 import FormContainer from "@/components/form/FormContainer";
@@ -13,10 +13,10 @@ type OriginFormProps = {
   origin?: any | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onOriginSubmit: () => void;
 };
 
-function OriginForm({ origin, setOpen }: OriginFormProps) {
-
+function OriginForm({ origin, setOpen, onOriginSubmit }: OriginFormProps) {
   const [formData, setFormData] = useState({
     id: origin?.id || null,
     title: origin?.title || "",
@@ -28,7 +28,11 @@ function OriginForm({ origin, setOpen }: OriginFormProps) {
   };
 
   return (
-    <FormContainer action={handleCustomerOriginAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleCustomerOriginAction}
+      setOpen={setOpen}
+      onFormSuccess={onOriginSubmit}
+    >
       <div className="grid md:grid-cols-2 gap-4 mt-4">
         {!!formData.id && (
           <Input type="hidden" value={origin?.id || ""} name="id" />
@@ -43,16 +47,16 @@ function OriginForm({ origin, setOpen }: OriginFormProps) {
             onChange={(e) => handleChange("title", e.target.value)}
           />
         </div>
-       
-      </div> <div className="mb-2">
-          <Label>توضیحات</Label>
-          <Textarea
-            name="description"
-            value={formData.description}
-            onChange={(e) => handleChange("description", e.target.value)}
-            rows={3}
-          />
-        </div>
+      </div>{" "}
+      <div className="mb-2">
+        <Label>توضیحات</Label>
+        <Textarea
+          name="description"
+          value={formData.description}
+          onChange={(e) => handleChange("description", e.target.value)}
+          rows={3}
+        />
+      </div>
       <div className="flex justify-center items-center gap-2 mt-8">
         <SubmitButton text="ذخیره" />
         <Button onClick={() => setOpen(false)} size={"lg"} variant={"outline"}>

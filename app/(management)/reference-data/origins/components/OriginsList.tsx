@@ -11,25 +11,29 @@ function OriginList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    const fetchOrigins = async () => {
-      setIsLoading(true);
-      try {
-        const { data, success, message } = await fetchCustomerOrigins();
-        if (success) {
-          setOrigins(data);
-        } else {
-          setErrorMessage(message || "خطایی رخ داده است.");
-        }
-      } catch (error) {
-        setErrorMessage("خطا در برقراری ارتباط با سرور.");
-      } finally {
-        setIsLoading(false);
+  const fetchOrigins = async () => {
+    setIsLoading(true);
+    try {
+      const { data, success, message } = await fetchCustomerOrigins();
+      if (success) {
+        setOrigins(data);
+      } else {
+        setErrorMessage(message || "خطایی رخ داده است.");
       }
-    };
+    } catch (error) {
+      setErrorMessage("خطا در برقراری ارتباط با سرور.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchOrigins();
   }, []);
+
+  const handleOriginSubmit = () => {
+    fetchOrigins();
+  };
 
   if (isLoading) return <p>در حال بارگذاری...</p>;
   if (errorMessage) return <CustomErrorBoundary message={errorMessage} />;
@@ -42,14 +46,18 @@ function OriginList() {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-start items-center gap-4">
-        <NewOriginForm />
+        <NewOriginForm handleOriginSubmit={handleOriginSubmit} />
       </div>
       <OriginTable data={origins} />
     </div>
   );
 }
 
-function NewOriginForm() {
+function NewOriginForm({
+  handleOriginSubmit,
+}: {
+  handleOriginSubmit: () => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -58,7 +66,7 @@ function NewOriginForm() {
       open={open}
       setOpen={setOpen}
     >
-      <OriginForm setOpen={setOpen} />
+      <OriginForm setOpen={setOpen} onOriginSubmit={handleOriginSubmit} />
     </ModalContainer>
   );
 }

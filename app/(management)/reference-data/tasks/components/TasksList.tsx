@@ -12,25 +12,29 @@ function TaskList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    const fetchTaskData = async () => {
-      setIsLoading(true);
-      try {
-        const { data, success, message } = await fetchTasks();
-        if (success) {
-          setTasks(data);
-        } else {
-          setErrorMessage(message || "خطایی رخ داده است.");
-        }
-      } catch (error) {
-        setErrorMessage("خطا در برقراری ارتباط با سرور.");
-      } finally {
-        setIsLoading(false);
+  const fetchTaskData = async () => {
+    setIsLoading(true);
+    try {
+      const { data, success, message } = await fetchTasks();
+      if (success) {
+        setTasks(data);
+      } else {
+        setErrorMessage(message || "خطایی رخ داده است.");
       }
-    };
+    } catch (error) {
+      setErrorMessage("خطا در برقراری ارتباط با سرور.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTaskData();
   }, []);
+
+  const handleTaskSubmit = () => {
+    fetchTaskData();
+  };
 
   if (isLoading) return <p>در حال بارگذاری...</p>;
   if (errorMessage) return <CustomErrorBoundary message={errorMessage} />;
@@ -43,14 +47,14 @@ function TaskList() {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-start items-center gap-4">
-        <NewTaskForm />
+        <NewTaskForm handleTaskSubmit={handleTaskSubmit} />
       </div>
       <TaskTable data={tasks} />
     </div>
   );
 }
 
-function NewTaskForm() {
+function NewTaskForm({ handleTaskSubmit }: { handleTaskSubmit: () => void }) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -59,7 +63,7 @@ function NewTaskForm() {
       open={open}
       setOpen={setOpen}
     >
-      <TaskForm setOpen={setOpen} />
+      <TaskForm setOpen={setOpen} onTaskSubmit={handleTaskSubmit} />
     </ModalContainer>
   );
 }

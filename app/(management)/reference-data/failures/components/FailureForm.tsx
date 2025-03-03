@@ -13,9 +13,10 @@ type FailureFormProps = {
   failure?: any | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onFailureSubmit: () => void;
 };
 
-function FailureForm({ failure, setOpen }: FailureFormProps) {
+function FailureForm({ failure, setOpen, onFailureSubmit }: FailureFormProps) {
   const [formData, setFormData] = useState({
     id: failure?.id || null,
     title: failure?.title || "",
@@ -27,7 +28,11 @@ function FailureForm({ failure, setOpen }: FailureFormProps) {
   };
 
   return (
-    <FormContainer action={handleFailureAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleFailureAction}
+      setOpen={setOpen}
+      onFormSuccess={onFailureSubmit}
+    >
       <div className="grid md:grid-cols-2 gap-4 mt-4">
         {!!formData.id && (
           <Input type="hidden" value={failure?.id || ""} name="id" />

@@ -25,12 +25,14 @@ type SupplierProductFormProps = {
   supplierProduct?: SupplierProduct | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onSupplierProductSubmit: () => void;
 };
 
 function SupplierProductForm({
   supplierProduct,
   setOpen,
   edit = false,
+  onSupplierProductSubmit,
 }: SupplierProductFormProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { products, suppliers } = useSelector(
@@ -65,7 +67,11 @@ function SupplierProductForm({
   };
 
   return (
-    <FormContainer action={handleSupplierProductAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleSupplierProductAction}
+      setOpen={setOpen}
+      onFormSuccess={onSupplierProductSubmit}
+    >
       <div className="grid md:grid-cols-2 gap-4 mt-4 w-[36rem]">
         {!!supplierProduct?.id && (
           <Input type="hidden" value={supplierProduct?.id} name="id" />

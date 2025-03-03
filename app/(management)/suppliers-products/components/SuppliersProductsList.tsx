@@ -13,25 +13,29 @@ function SuppliersProductsList({ search }: { search: string }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data, success, message } = await fetchSuppliersProducts(search);
-        if (success) {
-          setSuppliersProducts(data);
-        } else {
-          setError(message);
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const { data, success, message } = await fetchSuppliersProducts(search);
+      if (success) {
+        setSuppliersProducts(data);
+      } else {
+        setError(message);
       }
-    };
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [search]);
+
+  const handleSupplierProductSubmit = () => {
+    fetchData();
+  };
 
   if (loading) {
     return <div>لودینگ ...</div>;
@@ -48,7 +52,9 @@ function SuppliersProductsList({ search }: { search: string }) {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-between items-center">
-        <NewSupplierProductForm />
+        <NewSupplierProductForm
+          onSupplierProductSubmit={handleSupplierProductSubmit}
+        />
         <Search />
       </div>
       <SuppliersProductsTable data={suppliersProducts} />
@@ -56,7 +62,11 @@ function SuppliersProductsList({ search }: { search: string }) {
   );
 }
 
-function NewSupplierProductForm() {
+function NewSupplierProductForm({
+  onSupplierProductSubmit,
+}: {
+  onSupplierProductSubmit: () => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -65,7 +75,10 @@ function NewSupplierProductForm() {
       open={open}
       setOpen={setOpen}
     >
-      <SupplierProductForm setOpen={setOpen} />
+      <SupplierProductForm
+        setOpen={setOpen}
+        onSupplierProductSubmit={onSupplierProductSubmit}
+      />
     </ModalContainer>
   );
 }
