@@ -85,7 +85,9 @@ function SuppliersProductsTable({ data }: { data }) {
                   <TableCell className="text-center">{productTitle}</TableCell>
                   <TableCell className="text-center">{companyName}</TableCell>
                   <TableCell className="text-center">{unit}</TableCell>
-                  <TableCell className="text-center">{selling_price}</TableCell>
+                  <TableCell className="text-center">
+                    {selling_price.toLocaleString()}
+                  </TableCell>
                   <TableCell className="text-center">
                     {discount_price}
                   </TableCell>

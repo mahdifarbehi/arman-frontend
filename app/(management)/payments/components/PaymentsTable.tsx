@@ -94,7 +94,9 @@ function PaymentsTable({ data }: { data }) {
                 <TableCell className="text-center">
                   {payment_type === PaymentType.INSTALLMENT ? "قسطی" : "نقدی"}
                 </TableCell>
-                <TableCell className="text-center">{amount}</TableCell>
+                <TableCell className="text-center">
+                  {amount.toLocaleString()}
+                </TableCell>
                 <TableCell className="text-center justify-center flex gap-2">
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
