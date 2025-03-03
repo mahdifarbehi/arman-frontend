@@ -128,58 +128,68 @@ function TransactionForm({
               </SelectContent>
             </Select>
           </div>
-          <div className="mb-2">
-            <Label>وضعیت</Label>
-            <Select
-              dir="rtl"
-              name="status"
-              value={formData.status}
-              onValueChange={(value) => handleChange("status", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="وضعیت موردنظر را انتخاب کنید" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {Object.values(TransactionStatus).map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status === TransactionStatus.NEW
-                        ? "جدید"
-                        : status === TransactionStatus.FAILED
-                        ? "ناموفق"
-                        : "موفق"}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="mb-2">
-            <Label>علت عدم موفقیت</Label>
-            <Select
-              dir="rtl"
-              name="failure_id"
-              value={formData.failure_id}
-              onValueChange={(value) => handleChange("failure_id", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="علت  موردنظر را انتخاب کنید">
-                  {failures.find((f) => f.id == formData.failure_id)?.title ||
-                    "علت موردنظر را انتخاب کنید"}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value={null}>هیچ‌کدام</SelectItem>
-                  {failures.map((failure) => (
-                    <SelectItem key={failure.id} value={failure.id.toString()}>
-                      {failure.title}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+          {!editMode && (
+            <Input type="hidden" value={TransactionStatus.NEW} name="status" />
+          )}
+          {editMode && (
+            <div className="mb-2">
+              <Label>وضعیت</Label>
+              <Select
+                dir="rtl"
+                name="status"
+                value={formData.status}
+                onValueChange={(value) => handleChange("status", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="وضعیت موردنظر را انتخاب کنید" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {Object.values(TransactionStatus).map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {status === TransactionStatus.NEW
+                          ? "جدید"
+                          : status === TransactionStatus.FAILED
+                          ? "ناموفق"
+                          : "موفق"}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+          {editMode && (
+            <div className="mb-2">
+              <Label>علت عدم موفقیت</Label>
+              <Select
+                dir="rtl"
+                name="failure_id"
+                value={formData.failure_id}
+                onValueChange={(value) => handleChange("failure_id", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="علت  موردنظر را انتخاب کنید">
+                    {failures.find((f) => f.id == formData.failure_id)?.title ||
+                      "علت موردنظر را انتخاب کنید"}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value={null}>هیچ‌کدام</SelectItem>
+                    {failures.map((failure) => (
+                      <SelectItem
+                        key={failure.id}
+                        value={failure.id.toString()}
+                      >
+                        {failure.title}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <Textarea
             name="description"
             defaultValue={formData.description || ""}
