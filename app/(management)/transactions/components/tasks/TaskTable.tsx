@@ -46,7 +46,7 @@ function TaskTable({
   const tasks = data;
 
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       <div className="m-16 flex justify-end items-center gap-4">
         <ModalContainer
           dialogTitle="فعالیت جدید"

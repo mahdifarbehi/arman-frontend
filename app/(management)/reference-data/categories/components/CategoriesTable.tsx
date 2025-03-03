@@ -42,7 +42,7 @@ function CategoriesTable({ data }: { data }) {
 
   const categories = data;
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       {categories.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع دسته بندی ها : {categories.length}</TableCaption>

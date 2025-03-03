@@ -40,7 +40,7 @@ function TasksTable({ data }: { data }) {
 
   const tasks = data;
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       {tasks.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع فعالیت ها : {tasks.length}</TableCaption>
