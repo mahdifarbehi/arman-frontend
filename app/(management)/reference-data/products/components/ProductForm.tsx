@@ -71,9 +71,10 @@ function ProductForm({ product, setOpen }: ProductFormProps) {
             onValueChange={(value) => handleChange("category_id", value)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="دسته  موردنظر را انتخاب کنید">
-                {categories.find((c) => c.id === formData.category_id)?.title ||
-                  "دسته موردنظر را انتخاب کنید"}
+              <SelectValue placeholder="دسته موردنظر را انتخاب کنید">
+                {formData.category_id
+                  ? categories.find((c) => c.id === formData.category_id)?.title
+                  : "دسته موردنظر را انتخاب کنید"}
               </SelectValue>
             </SelectTrigger>
             <SelectContent>

@@ -43,7 +43,7 @@ function ProductsTable({ data }: { data }) {
 
   const products = data;
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       {products.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع محصولات : {products.length}</TableCaption>

@@ -51,7 +51,7 @@ function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
   const customers = data;
 
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       {customers.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع مشتریان : {customers.length}</TableCaption>

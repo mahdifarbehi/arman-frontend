@@ -38,7 +38,7 @@ function PaymentsTable({ data }: { data }) {
 
   const payments = data;
   return (
-    <div className="border border-gray-200 rounded-xl ">
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
       <Table dir="rtl">
         <TableCaption>مجموع پرداخت ها : {payments.length}</TableCaption>
         <TableHeader>
