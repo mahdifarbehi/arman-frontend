@@ -28,7 +28,7 @@ export const links: LinkCategory[] = [
     ],
   },
   {
-    title: "فروشندگان",
+    title: "مشاوران فروش",
     children: [
       {
         label: "مشتریان",
