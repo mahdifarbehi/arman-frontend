@@ -13,9 +13,10 @@ type TaskFormProps = {
   task?: TaskType | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onTaskSubmit: () => void;
 };
 
-function TaskForm({ task, setOpen }: TaskFormProps) {
+function TaskForm({ task, setOpen, onTaskSubmit }: TaskFormProps) {
   const [formData, setFormData] = useState({
     id: task?.id || null,
     title: task?.title || "",
@@ -27,7 +28,11 @@ function TaskForm({ task, setOpen }: TaskFormProps) {
   };
 
   return (
-    <FormContainer action={handleTaskAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleTaskAction}
+      setOpen={setOpen}
+      onFormSuccess={onTaskSubmit}
+    >
       <div className="grid md:grid-cols-2 gap-4 mt-4">
         {!!formData.id && (
           <Input type="hidden" value={task?.id || ""} name="id" />

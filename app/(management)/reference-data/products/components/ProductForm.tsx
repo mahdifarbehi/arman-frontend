@@ -24,9 +24,10 @@ type ProductFormProps = {
   product?: Product | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onProductSubmit: () => void;
 };
 
-function ProductForm({ product, setOpen }: ProductFormProps) {
+function ProductForm({ product, setOpen, onProductSubmit }: ProductFormProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { categories } = useSelector((state: RootState) => state.store);
 
@@ -45,7 +46,11 @@ function ProductForm({ product, setOpen }: ProductFormProps) {
   };
 
   return (
-    <FormContainer action={handleProductAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleProductAction}
+      setOpen={setOpen}
+      onFormSuccess={onProductSubmit}
+    >
       <div className="grid md:grid-cols-2 gap-4 mt-4">
         {!!formData.id && (
           <Input type="hidden" value={product?.id || ""} name="id" />

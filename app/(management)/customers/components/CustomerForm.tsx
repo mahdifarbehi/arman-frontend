@@ -30,9 +30,14 @@ type CustomerFormProps = {
   customer?: Customer | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onCustomerSubmit: () => void;
 };
 
-function CustomerForm({ customer, setOpen }: CustomerFormProps) {
+function CustomerForm({
+  customer,
+  setOpen,
+  onCustomerSubmit,
+}: CustomerFormProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { origins, sellers, customerCategories } = useSelector(
     (state: RootState) => state.store
@@ -65,7 +70,11 @@ function CustomerForm({ customer, setOpen }: CustomerFormProps) {
   };
 
   return (
-    <FormContainer action={handleCustomerAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleCustomerAction}
+      setOpen={setOpen}
+      onFormSuccess={onCustomerSubmit}
+    >
       {!!customer?.id && <Input type="hidden" value={customer?.id} name="id" />}
       <div className="grid md:grid-cols-3 gap-4 mt-4">
         {/* {fullname} */}

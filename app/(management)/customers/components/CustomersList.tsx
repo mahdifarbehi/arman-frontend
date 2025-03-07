@@ -36,30 +36,34 @@ function CustomersList({
     setFormsState((prev) => ({ ...prev, [formName]: state }));
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data, success, message } = await fetchCustomers(
-          search,
-          status,
-          categoryId,
-          originId
-        );
-        if (success) {
-          setCustomers(data);
-        } else {
-          setError(message);
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const { data, success, message } = await fetchCustomers(
+        search,
+        status,
+        categoryId,
+        originId
+      );
+      if (success) {
+        setCustomers(data);
+      } else {
+        setError(message);
       }
-    };
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [search, status, categoryId, originId]);
+
+  const handleCustomerSubmit = () => {
+    fetchData();
+  };
 
   if (loading) {
     return <div>درحال بارگذاری ...</div>;
@@ -76,7 +80,7 @@ function CustomersList({
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="flex justify-start items-center gap-4 mb-6">
-        <NewCustomerForm />
+        <NewCustomerForm onCustomerSubmit={handleCustomerSubmit} />
         <ModalContainer
           buttonText="دریافت از اکسل"
           dialogTitle="دریافت فایل"
@@ -107,7 +111,25 @@ function CustomersList({
   );
 }
 
-function NewCustomerForm() {
+// function NewCustomerForm() {
+//   const [open, setOpen] = useState(false);
+//   return (
+//     <ModalContainer
+//       dialogTitle="مشتری جدید"
+//       buttonText="مشتری جدید"
+//       open={open}
+//       setOpen={setOpen}
+//     >
+//       <CustomerForm setOpen={setOpen} />
+//     </ModalContainer>
+//   );
+// }
+
+function NewCustomerForm({
+  onCustomerSubmit,
+}: {
+  onCustomerSubmit: () => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -116,7 +138,7 @@ function NewCustomerForm() {
       open={open}
       setOpen={setOpen}
     >
-      <CustomerForm setOpen={setOpen} />
+      <CustomerForm setOpen={setOpen} onCustomerSubmit={onCustomerSubmit} />
     </ModalContainer>
   );
 }

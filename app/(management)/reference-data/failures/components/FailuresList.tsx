@@ -11,25 +11,29 @@ function FailureList() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    const fetchFailureData = async () => {
-      setIsLoading(true);
-      try {
-        const { data, success, message } = await fetchFailures();
-        if (success) {
-          setFailures(data);
-        } else {
-          setErrorMessage(message || "خطایی رخ داده است.");
-        }
-      } catch (error) {
-        setErrorMessage("خطا در برقراری ارتباط با سرور.");
-      } finally {
-        setIsLoading(false);
+  const fetchFailureData = async () => {
+    setIsLoading(true);
+    try {
+      const { data, success, message } = await fetchFailures();
+      if (success) {
+        setFailures(data);
+      } else {
+        setErrorMessage(message || "خطایی رخ داده است.");
       }
-    };
+    } catch (error) {
+      setErrorMessage("خطا در برقراری ارتباط با سرور.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchFailureData();
   }, []);
+
+  const handleFailureSubmit = () => {
+    fetchFailureData();
+  };
 
   if (isLoading) return <p>در حال بارگذاری...</p>;
   if (errorMessage) return <CustomErrorBoundary message={errorMessage} />;
@@ -42,14 +46,18 @@ function FailureList() {
       </h1>
       <div className="border border-indigo-600 mb-6"></div>
       <div className="my-8 flex justify-start items-center gap-4">
-        <NewFailureForm />
+        <NewFailureForm handleFailureSubmit={handleFailureSubmit} />
       </div>
       <FailureTable data={failures} />
     </div>
   );
 }
 
-function NewFailureForm() {
+function NewFailureForm({
+  handleFailureSubmit,
+}: {
+  handleFailureSubmit: () => void;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <ModalContainer
@@ -58,7 +66,7 @@ function NewFailureForm() {
       open={open}
       setOpen={setOpen}
     >
-      <FailureForm setOpen={setOpen} />
+      <FailureForm setOpen={setOpen} onFailureSubmit={handleFailureSubmit} />
     </ModalContainer>
   );
 }

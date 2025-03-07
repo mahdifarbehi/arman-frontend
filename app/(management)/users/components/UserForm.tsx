@@ -26,9 +26,10 @@ type UserFormProps = {
   user?: User | null;
   edit?: boolean;
   setOpen: (state: boolean) => void;
+  onUserSubmit: () => void;
 };
 
-function UserForm({ user, setOpen }: UserFormProps) {
+function UserForm({ user, setOpen, onUserSubmit }: UserFormProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { leaders } = useSelector((state: RootState) => state.store);
 
@@ -66,7 +67,11 @@ function UserForm({ user, setOpen }: UserFormProps) {
   };
 
   return (
-    <FormContainer action={handleUserAction} setOpen={setOpen}>
+    <FormContainer
+      action={handleUserAction}
+      setOpen={setOpen}
+      onFormSuccess={onUserSubmit}
+    >
       <div className="grid md:grid-cols-3 gap-4 mt-4">
         {!!user?.id && <Input type="hidden" value={user?.id} name="id" />}
         {/* Username */}
