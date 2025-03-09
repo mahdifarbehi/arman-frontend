@@ -995,7 +995,8 @@ export async function fetchProducts(): Promise<{
   message?: string;
 }> {
   try {
-    const response = await axios.get("/api/generic/product");
+    const response = await axios.get("/api/product/product");
+    // const response = await axios.get("/api/generic/product");
     return { success: true, data: response.data };
   } catch (error) {
     return renderError(error);
@@ -1564,6 +1565,7 @@ export async function fetchCategories(): Promise<{
   message?: string;
 }> {
   try {
+    // const response = await axios.get("/api/generic/category");
     const response = await axios.get("/api/generic/category");
     return { success: true, data: response.data };
   } catch (error) {

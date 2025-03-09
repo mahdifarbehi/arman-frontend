@@ -22,6 +22,7 @@ import SupplierForm from "./SupplierForm";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import type { Supplier } from "@/utils/types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function SuppliersTable({ data }: { data }) {
   const [open, setOpen] = useState(false);
@@ -45,13 +46,24 @@ function SuppliersTable({ data }: { data }) {
     }
   }, [supplierId, data]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(data.length);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   const suppliers = data;
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
       {/* <div className=" flex justify-end items-center gap-4">
         <NewSupplierForm />
       </div> */}
-      {suppliers.length !== 0 && (
+      {suppliers.length !== 0 && currentItems.length !== 0 && (
         <Table dir="rtl">
           <TableCaption className="mb-4">
             مجموع تامین کنندگان : {suppliers.length}
@@ -68,7 +80,7 @@ function SuppliersTable({ data }: { data }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {suppliers.map((supplier: Supplier) => {
+            {currentItems.map((supplier: Supplier) => {
               const {
                 id: supplierId,
                 category,
@@ -129,6 +141,33 @@ function SuppliersTable({ data }: { data }) {
           </TableBody>
         </Table>
       )}
+      <div className="flex justify-center mt-4 mb-5">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          <ChevronRight className="h-4 w-4" />
+          صفحه قبل
+        </Button>
+        <div className="flex items-center mx-2">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <Button
+              key={index + 1}
+              variant={currentPage === index + 1 ? "default" : "outline"}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          صفحه بعد
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

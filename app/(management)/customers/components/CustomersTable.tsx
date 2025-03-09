@@ -23,9 +23,22 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import type { Customer } from "@/utils/types";
 import { CustomerStatus } from "@/utils/types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
   const [open, setOpen] = useState(false);
   const [activeCustomer, setActiveCustomer] = useState<Customer | null>(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(data.length);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleOpenDialog = (customer: Customer) => {
     setActiveCustomer(customer);
@@ -52,7 +65,7 @@ function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
-      {customers.length !== 0 && (
+      {customers.length !== 0 && currentItems.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع مشتریان : {customers.length}</TableCaption>
           <TableHeader>
@@ -69,7 +82,7 @@ function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {customers.map((customer) => {
+            {currentItems.map((customer) => {
               const {
                 id: customerId,
                 fullname,
@@ -139,6 +152,9 @@ function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
                           customer={activeCustomer}
                           edit
                           setOpen={setOpen}
+                          onCustomerSubmit={() => {
+                            setOpen(false);
+                          }}
                         />
                       </DialogContent>
                     </Dialog>
@@ -159,6 +175,33 @@ function CustomersTable({ data, setCustomerIds }: { data; setCustomerIds }) {
           </TableBody>
         </Table>
       )}
+      <div className="flex justify-center mt-4 mb-5">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          <ChevronRight className="h-4 w-4" />
+          صفحه قبل
+        </Button>
+        <div className="flex items-center mx-2">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <Button
+              key={index + 1}
+              variant={currentPage === index + 1 ? "default" : "outline"}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          صفحه بعد
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

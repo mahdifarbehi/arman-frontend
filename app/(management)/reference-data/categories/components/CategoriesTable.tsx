@@ -22,6 +22,7 @@ import { X } from "lucide-react";
 // import type { Category } from "@/utils/types";
 import { deleteCategoryAction } from "@/utils/actions";
 import { toast } from "@/hooks/use-toast";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function CategoriesTable({ data }: { data }) {
   const [open, setOpen] = useState(false);
@@ -41,9 +42,21 @@ function CategoriesTable({ data }: { data }) {
   }, [open, activeCategory]);
 
   const categories = data;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(data.length);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
-      {categories.length !== 0 && (
+      {categories.length !== 0 && currentItems.length !== 0 && (
         <Table dir="rtl">
           <TableCaption>مجموع دسته بندی ها : {categories.length}</TableCaption>
           <TableHeader>
@@ -54,7 +67,7 @@ function CategoriesTable({ data }: { data }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories.map((category) => {
+            {currentItems.map((category) => {
               const { id: categoryId, title, description } = category;
               return (
                 <TableRow key={categoryId}>
@@ -89,6 +102,9 @@ function CategoriesTable({ data }: { data }) {
                           category={activeCategory}
                           edit
                           setOpen={setOpen}
+                          onCategorySubmit={() => {
+                            setOpen(false);
+                          }}
                         />
                       </DialogContent>
                     </Dialog>
@@ -105,6 +121,33 @@ function CategoriesTable({ data }: { data }) {
           </TableBody>
         </Table>
       )}
+      <div className="flex justify-center mt-4 mb-5">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          <ChevronRight className="h-4 w-4" />
+          صفحه قبل
+        </Button>
+        <div className="flex items-center mx-2">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <Button
+              key={index + 1}
+              variant={currentPage === index + 1 ? "default" : "outline"}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          صفحه بعد
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

@@ -38,7 +38,7 @@ function SuppliersProductsList({ search }: { search: string }) {
   };
 
   if (loading) {
-    return <div>لودینگ ...</div>;
+    return <div>بارگزاری ...</div>;
   }
 
   if (error) {
