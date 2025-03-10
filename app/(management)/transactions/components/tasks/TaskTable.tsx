@@ -24,6 +24,8 @@ import ModalContainer from "@/components/common/ModalContainer";
 import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { X } from "lucide-react";
+import moment from "moment-jalaali";
+
 function TaskTable({
   data,
   onRevalidation,
@@ -63,6 +65,51 @@ function TaskTable({
   }, [openEdit, activeTask]);
   const tasks = data;
 
+  // const handleSendMessage = async (task: Task) => {
+  //   try {
+  //     const authToken = localStorage.getItem("token");
+  //     if (!authToken) {
+  //       toast({ description: "توکن احراز هویت یافت نشد." });
+  //       return;
+  //     }
+  //     // console.log("Authorization Header:", `Bearer ${authToken}`);
+
+  //     const requestBody = {
+  //       date: task.task_date,
+  //     };
+  //     // console.log("Request Body:", requestBody);
+
+  //     const response = await axios.post(
+  //       `https://arman-crm.darkube.app/api/transaction-utils/task-messaging/${task.id}`,
+  //       requestBody,
+  //       {
+  //         headers: {
+  //           Authorization: authToken,
+  //         },
+  //       }
+  //     );
+  //     // console.log(response);
+  //     toast({ description: "پیام با موفقیت ارسال شد." });
+  //   } catch (error) {
+  //     console.error(error);
+  //     if (axios.isAxiosError(error)) {
+  //       if (error.response && error.response.status === 401) {
+  //         toast({ description: "مجوز کافی برای ارسال درخواست وجود ندارد." });
+  //       } else if (error.response && error.response.status === 422) {
+  //         toast({
+  //           description:
+  //             "خطا در اعتبارسنجی داده‌ها. لطفا فرمت تاریخ را بررسی کنید.",
+  //         });
+  //         console.log("Validation Error:", error.response.data);
+  //       } else {
+  //         toast({ description: `خطا در ارسال پیام: ${error.message}` });
+  //       }
+  //     } else {
+  //       toast({ description: "خطا در ارسال پیام. لطفا دوباره تلاش کنید." });
+  //     }
+  //   }
+  // };
+
   const handleSendMessage = async (task: Task) => {
     try {
       const authToken = localStorage.getItem("token");
@@ -70,12 +117,15 @@ function TaskTable({
         toast({ description: "توکن احراز هویت یافت نشد." });
         return;
       }
-      // console.log("Authorization Header:", `Bearer ${authToken}`);
+
+      // تبدیل تاریخ به فارسی با فرمت موردنظر
+      const jalaliDateTime = moment(task.task_date)
+        .locale("fa") // تنظیم زبان به فارسی
+        .format("dddd jYYYY/jMM/jDD HH:mm"); // فرمت: "سه شنبه ۱۴۰۳/۱۲/۱۴ ۱۲:۲۱"
 
       const requestBody = {
-        date: task.task_date,
+        date: jalaliDateTime,
       };
-      // console.log("Request Body:", requestBody);
 
       const response = await axios.post(
         `https://arman-crm.darkube.app/api/transaction-utils/task-messaging/${task.id}`,
@@ -86,14 +136,14 @@ function TaskTable({
           },
         }
       );
-      // console.log(response);
+
       toast({ description: "پیام با موفقیت ارسال شد." });
     } catch (error) {
       console.error(error);
       if (axios.isAxiosError(error)) {
-        if (error.response && error.response.status === 401) {
+        if (error.response?.status === 401) {
           toast({ description: "مجوز کافی برای ارسال درخواست وجود ندارد." });
-        } else if (error.response && error.response.status === 422) {
+        } else if (error.response?.status === 422) {
           toast({
             description:
               "خطا در اعتبارسنجی داده‌ها. لطفا فرمت تاریخ را بررسی کنید.",
