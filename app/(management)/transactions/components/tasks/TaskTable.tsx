@@ -19,9 +19,11 @@ import {
 import TaskForm from "@/app/(management)/transactions/components/tasks/TaskForm";
 import { Button } from "@/components/ui/button";
 import { isoToPersian } from "@/utils/dateConvertor";
-import { X } from "lucide-react";
 import { TaskStatus } from "@/utils/types";
 import ModalContainer from "@/components/common/ModalContainer";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
+import { X } from "lucide-react";
 function TaskTable({
   data,
   onRevalidation,
@@ -31,11 +33,27 @@ function TaskTable({
   onRevalidation;
   transactionId;
 }) {
+  interface Task {
+    id: string;
+    task_type: {
+      title: string;
+    };
+    task_date: string;
+    finish_data?: string;
+    status: TaskStatus;
+    description: string;
+  }
+  interface TaskTableProps {
+    data: Task[];
+    onRevalidation: () => void;
+    transactionId: string;
+  }
+
   const [openEdit, setOpenEdit] = useState(false);
   const [openNew, setOpenNew] = useState(false);
 
   const [activeTask, setActiveTask] = useState(null);
-  const handleOpenDialog = (task) => {
+  const handleOpenDialog = (task: Task) => {
     setActiveTask(task);
     setOpenEdit(true);
   };
@@ -44,6 +62,51 @@ function TaskTable({
     if (openEdit === false) setActiveTask(null);
   }, [openEdit, activeTask]);
   const tasks = data;
+
+  const handleSendMessage = async (task: Task) => {
+    try {
+      const authToken = localStorage.getItem("token");
+      if (!authToken) {
+        toast({ description: "توکن احراز هویت یافت نشد." });
+        return;
+      }
+      // console.log("Authorization Header:", `Bearer ${authToken}`);
+
+      const requestBody = {
+        date: task.task_date,
+      };
+      // console.log("Request Body:", requestBody);
+
+      const response = await axios.post(
+        `https://arman-crm.darkube.app/api/transaction-utils/task-messaging/${task.id}`,
+        requestBody,
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      );
+      // console.log(response);
+      toast({ description: "پیام با موفقیت ارسال شد." });
+    } catch (error) {
+      console.error(error);
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 401) {
+          toast({ description: "مجوز کافی برای ارسال درخواست وجود ندارد." });
+        } else if (error.response && error.response.status === 422) {
+          toast({
+            description:
+              "خطا در اعتبارسنجی داده‌ها. لطفا فرمت تاریخ را بررسی کنید.",
+          });
+          console.log("Validation Error:", error.response.data);
+        } else {
+          toast({ description: `خطا در ارسال پیام: ${error.message}` });
+        }
+      } else {
+        toast({ description: "خطا در ارسال پیام. لطفا دوباره تلاش کنید." });
+      }
+    }
+  };
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
@@ -58,7 +121,6 @@ function TaskTable({
             setOpen={setOpenNew}
             revalidation={onRevalidation}
             transactionId={transactionId}
-           
           />
         </ModalContainer>
       </div>
@@ -136,7 +198,20 @@ function TaskTable({
                       />
                     </DialogContent>
                   </Dialog>
-                  {/* <Button>ارسال پیامک</Button> */}
+                  {/* <Button
+                    onClick={() => handleSendMessage(task)}
+                    variant="outline"
+                    size="sm"
+                  >
+                    ارسال پیام
+                  </Button> */}
+                  <Button
+                    onClick={() => handleSendMessage(task)}
+                    variant="outline"
+                    size="sm"
+                  >
+                    ارسال پیام
+                  </Button>
                 </TableCell>
               </TableRow>
             );

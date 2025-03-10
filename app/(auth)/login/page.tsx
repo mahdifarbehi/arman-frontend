@@ -2,18 +2,17 @@
 import { useActionState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { login } from "@/utils/actions";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { useRouter } from "next/navigation";
-
 import { SubmitButton } from "@/components/form/Buttons";
+
 const initialState = {
   message: "",
   success: false,
   data: "",
 };
+
 function LoginPage() {
   const [state, formAction] = useActionState(login, initialState);
   const { toast } = useToast();
@@ -31,6 +30,7 @@ function LoginPage() {
         description: state?.message || " نام کاربری یا رمز عبور درست نمی باشد",
       });
   }, [state, toast, router]);
+
   return (
     <section className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
@@ -40,7 +40,7 @@ function LoginPage() {
         <form action={formAction}>
           <div className="space-y-6">
             <div className="mb-2">
-              <Label>نام کاربری</Label>{" "}
+              <Label>نام کاربری</Label>
               <Input
                 type="text"
                 name="username"
