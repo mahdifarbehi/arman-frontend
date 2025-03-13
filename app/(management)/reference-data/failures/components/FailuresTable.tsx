@@ -87,10 +87,13 @@ function FailuresTable({ data }: { data }) {
                           failure={activeFailure}
                           edit
                           setOpen={setOpen}
+                          onFailureSubmit={() => {
+                            console.log("ok");
+                          }}
                         />
                       </DialogContent>
                     </Dialog>
-                    <Button size={"sm"} onClick={() => handleDelete(failureId)}>
+                    <Button size={"sm"} onClick={() => {}}>
                       حذف
                     </Button>
                   </TableCell>

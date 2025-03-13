@@ -87,6 +87,9 @@ function OriginsTable({ data }: { data }) {
                           origin={activeOrigin}
                           edit
                           setOpen={setOpen}
+                          onOriginSubmit={() => {
+                            console.log("ok");
+                          }}
                         />
                       </DialogContent>
                     </Dialog>

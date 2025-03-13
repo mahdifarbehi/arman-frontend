@@ -83,7 +83,14 @@ function TasksTable({ data }: { data }) {
                           <DialogTitle>ویرایش فعالیت</DialogTitle>
                         </DialogHeader>
 
-                        <TaskForm task={activeTask} edit setOpen={setOpen} />
+                        <TaskForm
+                          task={activeTask}
+                          edit
+                          setOpen={setOpen}
+                          onTaskSubmit={() => {
+                            console.log("ok");
+                          }}
+                        />
                       </DialogContent>
                     </Dialog>
                     <Button size={"sm"} onClick={() => handleDelete(taskId)}>

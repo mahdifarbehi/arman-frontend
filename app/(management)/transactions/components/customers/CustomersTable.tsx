@@ -70,7 +70,14 @@ function CustomersTable({ data }: { data }) {
                   <DialogTitle>ویرایش مشتری</DialogTitle>
                 </DialogHeader>
 
-                <CustomerForm customer={customer} edit setOpen={setOpen} />
+                <CustomerForm
+                  customer={customer}
+                  edit
+                  setOpen={setOpen}
+                  onCustomerSubmit={() => {
+                    console.log("ok");
+                  }}
+                />
               </DialogContent>
             </Dialog>
           </TableCell>
