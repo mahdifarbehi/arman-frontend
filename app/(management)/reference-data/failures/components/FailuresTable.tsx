@@ -93,7 +93,12 @@ function FailuresTable({ data }: { data }) {
                         />
                       </DialogContent>
                     </Dialog>
-                    <Button size={"sm"} onClick={() => {}}>
+                    <Button
+                      size={"sm"}
+                      onClick={() => {
+                        handleDelete(failureId);
+                      }}
+                    >
                       حذف
                     </Button>
                   </TableCell>
